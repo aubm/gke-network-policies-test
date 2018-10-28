@@ -11,13 +11,6 @@ spec:
     - Ingress
     - Egress
   ingress:
-  - from:
-    - podSelector:
-        matchLabels:
-          app: service-2
-    ports:
-      - protocol: TCP
-        port: 8080
   egress:
   - to:
     - podSelector:
@@ -26,6 +19,11 @@ spec:
     ports:
       - protocol: TCP
         port: 8080
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
 ---
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
@@ -47,10 +45,8 @@ spec:
       - protocol: TCP
         port: 8080
   egress:
-  - to:
-    - podSelector:
-        matchLabels:
-          app: service-1
-    ports:
-      - protocol: TCP
-        port: 8080
+  - ports:
+    - protocol: UDP
+      port: 53
+    - protocol: TCP
+      port: 53
